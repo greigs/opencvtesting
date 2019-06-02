@@ -83,20 +83,19 @@ function trackingSetup(){
         return false;
     });
     tracker = new tracking.ColorTracker(['match']);
-    tracker.minDimension = 20; // make this smaller to track smaller objects    
+    tracker.minDimension = 5; // make this smaller to track smaller objects    
+    tracker.maxDimension = 50; 
     tracking.track('video', tracker, {
         camera: false,
         audio: false
     });
+    strokeWeight(2);
+    stroke(255, 0, 0);
+    noFill();
     tracker.on('track', function (event) {
+        canvas.clear();
         event.data.forEach(function (r) {
-            canvas.clear();
-            strokeWeight(1);
-            stroke(255, 0, 0);
-            noFill();
-            event.data.forEach(function (r) {
-                rect(r.x, r.y, r.width, r.height);
-            })
-        })
+            rect(r.x, r.y, r.width, r.height);
+        });
     });
 }
